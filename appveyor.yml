@@ -1,5 +1,7 @@
 clone_folder: "c:\\WORK"
 
+os: Visual Studio 2015
+
 environment:
   global:
     CABOPTS:  "--store-dir=C:\\SR --http-transport=plain-http"
@@ -7,25 +9,25 @@ environment:
     # 64 bit builds
     - GHCVER: "8.4.2"
       CHOCOPTS:
-    - GHCVER: "8.2.2"
-      CHOCOPTS:
-    - GHCVER: "8.0.2"
-      CHOCOPTS:
-    - GHCVER: "7.10.3.2"
-      CHOCOPTS:
-    - GHCVER: "7.8.4.1"
-      CHOCOPTS:
-    # 32 bit builds
-    - GHCVER: "8.4.2"
-      CHOCOPTS: --forcex86
-    - GHCVER: "8.2.2"
-      CHOCOPTS: --forcex86
-    - GHCVER: "8.0.2"
-      CHOCOPTS: --forcex86
-    - GHCVER: "7.10.3.2"
-      CHOCOPTS: --forcex86
-    - GHCVER: "7.8.4.1"
-      CHOCOPTS: --forcex86
+    # - GHCVER: "8.2.2"
+    #   CHOCOPTS:
+    # - GHCVER: "8.0.2"
+    #   CHOCOPTS:
+    # - GHCVER: "7.10.3.2"
+    #   CHOCOPTS:
+    # - GHCVER: "7.8.4.1"
+    #   CHOCOPTS:
+    # # 32 bit builds
+    # - GHCVER: "8.4.2"
+    #   CHOCOPTS: --forcex86
+    # - GHCVER: "8.2.2"
+    #   CHOCOPTS: --forcex86
+    # - GHCVER: "8.0.2"
+    #   CHOCOPTS: --forcex86
+    # - GHCVER: "7.10.3.2"
+    #   CHOCOPTS: --forcex86
+    # - GHCVER: "7.8.4.1"
+    #   CHOCOPTS: --forcex86
 
 cache:
 - "C:\\SR"
@@ -34,9 +36,9 @@ install:
  - "choco install -y ghc --version %GHCVER% %CHOCOPTS%"
  - "choco install -y cabal %CHOCOPTS%"
  - "choco install -y libsodium"
- - "appveyor DownloadFile https://download.libsodium.org/libsodium/releases/libsodium-1.0.16-mingw.tar.gz"
- - "7z e libsodium-1.0.16-mingw.tar.gz"
- - "7z x libsodium-1.0.16-mingw.tar -oc:\\WORK\\sodium"
+ - "appveyor DownloadFile https://download.libsodium.org/libsodium/releases/libsodium-1.0.16-msvc.zip"
+ - "7z x libsodium-1.0.16-msvc.zip -oc:\\WORK\\sodium"
+ - "dir c:\\WORK\\sodium"
  - "refreshenv"
  - "set PATH=C:\\ghc\\ghc-%GHCVER%:C:\\msys64\\mingw64\\bin;C:\\msys64\\usr\\bin;%PATH%"
  - "cabal --version"
@@ -48,4 +50,4 @@ build: off
 test_script:
  - IF EXIST configure.ac bash -c "autoreconf -i"
  - "echo packages:. > cabal.project"
- - "cabal %CABOPTS% new-build -j1 all --extra-include-dirs c:\\WORK\\sodium\\libsodlim-win64\\include  --extra-lib-dirs c:\\WORK\\sodium\\libsodium-win64\\bin"
+ - "cabal %CABOPTS% new-build -j1 all --extra-include-dirs c:\\WORK\\sodium\\include  --extra-lib-dirs c:\\WORK\\sodium\\x64\\Release\\v141\\dynamic"
