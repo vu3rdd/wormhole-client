@@ -49,5 +49,5 @@ build: off
 test_script:
  - IF EXIST configure.ac bash -c "autoreconf -i"
  - "echo packages:. > cabal.project"
- - "cabal new-install saltine --extra-include-dirs c:\\WORK\\sodium\\include  --extra-lib-dirs c:\\WORK\\sodium\\x64\\Release\\v141\\dynamic"
+ - "cabal new-install -vverbose+nowrap saltine --extra-include-dirs c:\\WORK\\sodium\\include  --extra-lib-dirs c:\\WORK\\sodium\\x64\\Release\\v141\\dynamic"
  #  - "cabal %CABOPTS% new-build -j1 all --extra-include-dirs c:\\WORK\\sodium\\include  --extra-lib-dirs c:\\WORK\\sodium\\x64\\Release\\v141\\dynamic"
